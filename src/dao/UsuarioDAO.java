@@ -25,14 +25,20 @@ public class UsuarioDAO {
     }
     
     public void insert(Usuario usuario) throws SQLException{
-            String sql = "INSERT INTO usuarios(usuario,senha) VALUES ('"+ usuario.getUsuario() +"','"+ usuario.getSenha() +"')";
+            String sql = "INSERT INTO usuarios(usuario,senha) VALUES (?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
+            //Evitando Sql Injection
+            statement.setString(1, usuario.getUsuario());
+            statement.setString(2, usuario.getSenha());
             statement.execute();
     }
 
     public boolean verificarSeExiste(Usuario usuario) throws SQLException {
-        String sql = "SELECT * FROM usuarios WHERE usuario = '"+ usuario.getUsuario() +"' and senha = '"+ usuario.getSenha() +"'";
+        String sql = "SELECT * FROM usuarios WHERE usuario = ? and senha = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
+        //Evitando Sql Injection
+        statement.setString(1, usuario.getUsuario());
+        statement.setString(2, usuario.getSenha());
         statement.execute();
         
         ResultSet resultSet = statement.getResultSet();
