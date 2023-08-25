@@ -4,6 +4,13 @@
  */
 package view;
 
+import dao.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author leona
@@ -72,6 +79,11 @@ public class FormCadastroView extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(0, 0, 153));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 160, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/images.jpg"))); // NOI18N
@@ -83,6 +95,19 @@ public class FormCadastroView extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            Connection conexao = new Conexao().getConecction();
+            String sql = "INSERT INTO usuarios(usuario,senha) VALUES ('evany','carljung1')";
+            PreparedStatement statement = conexao.prepareStatement(sql);
+            statement.execute();
+            
+            conexao.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
