@@ -5,11 +5,14 @@
 package view;
 
 import dao.Conexao;
+import dao.UsuarioDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Usuario;
 
 /**
  *
@@ -97,13 +100,13 @@ public class FormCadastroView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Usuario usuario = new Usuario("Rita", "ritinha");
         try {
             Connection conexao = new Conexao().getConecction();
-            String sql = "INSERT INTO usuarios(usuario,senha) VALUES ('evany','carljung1')";
-            PreparedStatement statement = conexao.prepareStatement(sql);
-            statement.execute();
+            UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+            usuarioDAO.insert(usuario);
             
-            conexao.close();
+            JOptionPane.showMessageDialog(rootPane,"Usuário cadastrado com sucesso!");
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroView.class.getName()).log(Level.SEVERE, null, ex);
         }
