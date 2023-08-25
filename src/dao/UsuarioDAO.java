@@ -6,6 +6,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,17 @@ public class UsuarioDAO {
             String sql = "INSERT INTO usuarios(usuario,senha) VALUES ('"+ usuario.getUsuario() +"','"+ usuario.getSenha() +"')";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.execute();
-              connection.close();
     }
+
+    public boolean verificarSeExiste(Usuario usuario) throws SQLException {
+        String sql = "SELECT * FROM usuarios WHERE usuario = '"+ usuario.getUsuario() +"' and senha = '"+ usuario.getSenha() +"'";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.execute();
+        
+        ResultSet resultSet = statement.getResultSet();
+        return resultSet.next();
+    }
+
+
+
 }
